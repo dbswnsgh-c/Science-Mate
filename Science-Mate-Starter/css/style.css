@@ -1,0 +1,82 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #111;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 원본 PDF의 16:9 비율을 유지하는 화면 영역 */
+.stage {
+  position: relative;
+  width: min(100vw, 177.7778vh);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.screen-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+/* 시작 문구가 있는 영역을 투명한 버튼으로 덮어 클릭할 수 있게 함 */
+.start-button {
+  position: absolute;
+  left: 28%;
+  top: 52%;
+  width: 44%;
+  height: 12%;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.start-button:focus-visible {
+  outline: 3px solid #ff8c00;
+  outline-offset: 3px;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.stage.is-leaving {
+  animation: fade-out 220ms ease forwards;
+}
+
+.stage.is-entering {
+  animation: fade-in 260ms ease forwards;
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

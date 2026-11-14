@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Mate</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <section class="stage" id="startScreen" aria-label="Science Mate 시작 화면">
+      <img class="screen-image" src="images/start-screen.png" alt="Science Mate 시작 화면">
+      <button
+        class="start-button"
+        id="startButton"
+        type="button"
+        aria-label="시작하기"
+        title="클릭하거나 아무 키나 눌러 시작하세요"
+      ></button>
+    </section>
+
+    <section class="stage is-hidden" id="categoryScreen" aria-label="학습 분야 선택 화면">
+      <img class="screen-image" src="images/category-screen.png" alt="Chemistry, Physics, E.Circuit 분야 선택 화면">
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
