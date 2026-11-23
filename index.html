@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science Mate</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="app">
+    <!-- 첫 번째 화면: 시작 화면 -->
+    <section class="stage" id="startScreen" aria-label="Science Mate 시작 화면">
+      <img class="screen-image" src="images/start-screen.png" alt="Science Mate 시작 화면">
+      <button
+        class="start-button"
+        id="startButton"
+        type="button"
+        aria-label="시작하기"
+        title="클릭하거나 아무 키나 눌러 시작하세요"
+      ></button>
+    </section>
+
+    <!-- 두 번째 화면: 분야 선택 화면 -->
+    <section class="stage is-hidden" id="categoryScreen" aria-label="학습 분야 선택 화면">
+      <img class="screen-image" src="images/category-screen.png" alt="Chemistry, Physics, E.Circuit 분야 선택 화면">
+      <button
+        class="ecircuit-button"
+        id="ecircuitButton"
+        type="button"
+        aria-label="E.Circuit 주제 선택 화면으로 이동"
+        title="E.Circuit"
+      ></button>
+    </section>
+
+    <!-- 세 번째 화면: E.Circuit 주제 선택 화면 -->
+    <section class="stage is-hidden" id="ecircuitTopicsScreen" aria-label="E.Circuit 주제 선택 화면">
+      <img
+        class="screen-image"
+        src="images/ecircuit-topics-screen.png"
+        alt="E.Circuit 주제: Resistor, Capacitor and Inductor, Ohm's Law, Kirchhoff's Law"
+      >
+      <button class="ohms-button" id="ohmsButton" type="button" aria-label="옴의 법칙 학습 화면 열기" title="OHM’S LAW"></button>
+    </section>
+
+    <!-- 네 번째 화면: 옴의 법칙 학습 페이지 -->
+    <section class="stage stage--portrait is-hidden" id="ohmsScreen" aria-label="옴의 법칙 학습 화면">
+      <img class="screen-image" src="images/ohms-law-screen.png" alt="게오르크 옴, V=IR, 전기회로 및 전압·전류·저항 슬라이더 디자인">
+      <!-- 원본 디자인 오른쪽 하단에 실제 동작하는 슬라이더를 배치 -->
+      <div class="ohms-controls" aria-label="옴의 법칙 시뮬레이터">
+        <div class="formula-caption">Ohm’s Law</div>
+        <div class="live-formula" aria-live="polite">V = <span id="voltageValue">10</span> V</div>
+        <div class="equation-detail" id="equationDetail">2.0 A × 5.0 Ω = 10.0 V</div>
+        <label for="voltageSlider">V (Voltage) <output id="voltageOutput">10.0 V</output></label>
+        <input id="voltageSlider" type="range" min="0" max="100" step="0.1" value="10" disabled aria-label="계산된 전압" />
+        <div class="range-ends"><span>0</span><span>100 V</span></div>
+        <label for="currentSlider">I (Current) <output id="currentOutput">2.0 A</output></label>
+        <input id="currentSlider" type="range" min="0" max="10" step="0.1" value="2" />
+        <div class="range-ends"><span>0</span><span>10 A</span></div>
+        <label for="resistanceSlider">R (Resistance) <output id="resistanceOutput">5.0 Ω</output></label>
+        <input id="resistanceSlider" type="range" min="0" max="10" step="0.1" value="5" />
+        <div class="range-ends"><span>0</span><span>10 Ω</span></div>
+      </div>
+      <button class="back-button" id="backButton" type="button" aria-label="E.CIRCUIT 주제 선택 화면으로 돌아가기" title="주제 선택 화면으로 돌아가기">← Back</button>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>
