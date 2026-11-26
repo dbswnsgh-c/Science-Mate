@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>르샤틀리에 원리 (Le Chatelier's Principle)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background: #f4f7fb;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #093256, #0f4c81, #0096c7);
+      color: #fff;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 1.85rem; margin-bottom: 0.4rem; }
+    header p { opacity: 0.92; font-size: 0.95rem; }
+    .container {
+      max-width: 1080px;
+      margin: 1.8rem auto 3rem;
+      padding: 0 1.25rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.4rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.35rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    .card h2 {
+      font-size: 1.15rem;
+      color: #093256;
+      margin-bottom: 0.7rem;
+      border-left: 4px solid #0096c7;
+      padding-left: 0.6rem;
+    }
+    .card p { font-size: 0.94rem; margin-bottom: 0.6rem; }
+    .formula {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #093256;
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+    .sim-card {
+      background: linear-gradient(180deg, #0b4f8a 0%, #093b69 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 1.4rem;
+    }
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.2rem;
+    }
+    .alpha-badge {
+      background: rgba(255, 255, 255, 0.14);
+      padding: 0.55rem 0.95rem;
+      border-radius: 10px;
+      text-align: right;
+    }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+    }
+    .sim-box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .control { margin-bottom: 1rem; }
+    .control-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    input[type="range"] { width: 100%; cursor: pointer; }
+    .bounds {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      opacity: 0.85;
+    }
+    .shift-box {
+      background: rgba(14, 165, 233, 0.24);
+      border-left: 4px solid #7dd3fc;
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-top: 0.8rem;
+    }
+    .result-box {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-bottom: 0.9rem;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.94rem;
+      margin-top: 0.35rem;
+    }
+    .chamber {
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.65rem;
+      min-height: 110px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 6px;
+      margin-top: 0.4rem;
+    }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-n2o4 { background: #0ea5e9; }
+    .dot-no2 { background: #f97316; }
+    .legend {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.84rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>르샤틀리에 원리 (Le Chatelier's Principle)</h1>
+    <p>농도 · 압력 · 온도 변화에 따른 화학 평형의 이동과 기체 해리 시뮬레이션</p>
+  </header>
+
+  <main class="container">
+    <div class="grid-2">
+      <div class="card">
+        <h2>르샤틀리에 원리의 개념</h2>
+        <p>
+          화학 평형 상태에 있는 계에 <strong>농도, 압력, 온도</strong>와 같은 외부 변화가 가해지면, 그 변화를 완화(상쇄)하는 방향으로 평형이 이동한다는 원리입니다.
+        </p>
+        <p>
+          외부 조건이 바뀌어 기존 평형이 깨지면 정반응과 역반응 속도가 달라지며, 새로운 평형 상태에 도달할 때까지 반응이 진행됩니다.
+        </p>
+        <div class="formula">N₂O₄(g) ⇌ 2NO₂(g) &nbsp;|&nbsp; 압력 ↑ → 왼쪽(기체 몰수 감소) 이동</div>
+      </div>
+
+      <div class="card">
+        <h2>외부 조건 변화에 따른 평형 이동</h2>
+        <p>
+          <strong>농도 변화:</strong> 반응물 농도를 높이면 그 반응물을 소모하는 정반응 방향으로 이동합니다.
+        </p>
+        <p>
+          <strong>압력(부피) 변화:</strong> 기체 반응에서 부피를 줄여 압력을 높이면 기체 몰수가 적은 쪽으로 평형이 이동합니다.
+        </p>
+        <p>
+          <strong>온도 변화:</strong> 온도를 높이면 열을 흡수하는(흡열) 방향, 낮추면 열을 방출하는(발열) 방향으로 이동합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.4rem;">
+      <h2>대표 예시: 탄산음료에서 이산화탄소(CO₂) 방출</h2>
+      <p>
+        밀폐된 탄산음료 내부는 높은 압력 상태이므로 많은 양의 이산화탄소 기체가 액체에 용해되어 있습니다. 하지만 뚜껑을 열어 이산화탄소 압력이 낮아지면 용해된 CO₂를 기체로 방출하는 방향으로 평형이 이동하면서 거품이 발생합니다.
+      </p>
+    </div>
+
+    <div class="sim-card">
+      <div class="sim-header">
+        <div>
+          <h3>LE CHATELIER SIMULATOR</h3>
+          <small>N₂O₄(g) ⇌ 2NO₂(g) | 등온 모델 (isothermal model)</small>
+        </div>
+        <div class="alpha-badge">
+          <div style="font-size: 0.76rem; opacity: 0.85;">NO₂ dissociation fraction (해리율 α)</div>
+          <div id="alphaVal" style="font-size: 1.45rem; font-weight: 800; color: #7dd3fc;">19.0%</div>
+        </div>
+      </div>
+
+      <div class="sim-grid">
+        <div class="sim-box">
+          <div class="control">
+            <div class="control-top">
+              <span>PRESSURE (P) 압력</span>
+              <span id="pLabel">1.0 bar</span>
+            </div>
+            <input id="pRange" type="range" min="0.1" max="3.0" step="0.1" value="1.0" />
+            <div class="bounds"><span>0.1 bar</span><span>3.0 bar</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-top">
+              <span>EQUILIBRIUM Kp (평형 상수)</span>
+              <span id="kpLabel">0.15 bar</span>
+            </div>
+            <input id="kpRange" type="range" min="0.01" max="0.60" step="0.01" value="0.15" />
+            <div class="bounds"><span>0.01 bar</span><span>0.60 bar</span></div>
+          </div>
+
+          <div class="shift-box">
+            <strong id="shiftTitle">기준 압력 (P = 1.0 bar)</strong>
+            <p id="shiftDesc" style="font-size: 0.88rem; margin-top: 0.35rem;">
+              압력을 높이면 기체 입자 수가 적은 쪽(왼쪽, N₂O₄ 방향)으로 평형이 이동합니다.
+            </p>
+            <div class="formula" style="background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); color: #fff;">
+              α = √[ Kp / (4P + Kp) ]
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-box">
+          <div style="font-size: 0.78rem; font-weight: 700; color: #bae6fd;">PARTIAL PRESSURES (부분압력)</div>
+          <div class="result-box">
+            <div class="result-row">
+              <span>N₂O₄ 부분압력 (기체 1몰 쪽):</span>
+              <strong id="pn2o4">0.81 bar</strong>
+            </div>
+            <div class="result-row">
+              <span>NO₂ 부분압력 (기체 2몰 쪽):</span>
+              <strong id="pno2">0.19 bar</strong>
+            </div>
+          </div>
+
+          <div style="font-size: 0.78rem; font-weight: 700; color: #bae6fd;">PARTICLE DISTRIBUTION (모식적 기체 입자 비율)</div>
+          <div id="gasBox" class="chamber"></div>
+          <div class="legend">
+            <span><i class="dot dot-n2o4"></i> N₂O₄ (기체 몰수 적음)</span>
+            <span><i class="dot dot-no2"></i> NO₂ (기체 몰수 많음)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const pRange = document.getElementById("pRange");
+    const kpRange = document.getElementById("kpRange");
+
+    function updateLeChatelier() {
+      const P = parseFloat(pRange.value);
+      const Kp = parseFloat(kpRange.value);
+
+      const alpha = Math.sqrt(Kp / (4 * P + Kp));
+      const pN2O4 = ((1 - alpha) / (1 + alpha)) * P;
+      const pNO2 = ((2 * alpha) / (1 + alpha)) * P;
+
+      document.getElementById("pLabel").textContent = P.toFixed(1) + " bar";
+      document.getElementById("kpLabel").textContent = Kp.toFixed(2) + " bar";
+      document.getElementById("alphaVal").textContent = (alpha * 100).toFixed(1) + "%";
+      document.getElementById("pn2o4").textContent = pN2O4.toFixed(2) + " bar";
+      document.getElementById("pno2").textContent = pNO2.toFixed(2) + " bar";
+
+      const title = document.getElementById("shiftTitle");
+      const desc = document.getElementById("shiftDesc");
+
+      if (P > 1.0) {
+        title.textContent = "P ↑ → 평형이 왼쪽(LEFT)으로 이동";
+        desc.textContent = "압력이 증가하면 기체 입자 수가 적은 N₂O₄ 생성 방향(역반응)이 우세해져 해리율 α가 감소합니다.";
+      } else if (P < 1.0) {
+        title.textContent = "P ↓ → 평형이 오른쪽(RIGHT)으로 이동";
+        desc.textContent = "압력이 감소하면 기체 입자 수가 늘어나는 NO₂ 생성 방향(정반응)이 우세해져 해리율 α가 증가합니다.";
+      } else {
+        title.textContent = "기준 압력 (P = 1.0 bar)";
+        desc.textContent = "압력을 높이면 기체 입자 수가 적은 쪽(왼쪽)으로, 낮추면 많은 쪽(오른쪽)으로 이동합니다.";
+      }
+
+      const box = document.getElementById("gasBox");
+      box.innerHTML = "";
+      const total = 16;
+      const no2Count = Math.max(1, Math.min(total - 1, Math.round(total * alpha)));
+      const n2o4Count = total - no2Count;
+
+      for (let i = 0; i < n2o4Count; i++) {
+        const d = document.createElement("span");
+        d.className = "dot dot-n2o4";
+        box.appendChild(d);
+      }
+      for (let j = 0; j < no2Count; j++) {
+        const d = document.createElement("span");
+        d.className = "dot dot-no2";
+        box.appendChild(d);
+      }
+    }
+
+    pRange.addEventListener("input", updateLeChatelier);
+    kpRange.addEventListener("input", updateLeChatelier);
+    updateLeChatelier();
+  </script>
+</body>
+</html>
