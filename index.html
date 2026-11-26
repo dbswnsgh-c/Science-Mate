@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>화학 평형 (Chemical Equilibrium)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      background: #f4f7fb;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, #093256, #0f4c81, #0096c7);
+      color: #fff;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 1.85rem; margin-bottom: 0.4rem; }
+    header p { opacity: 0.92; font-size: 0.95rem; }
+    .container {
+      max-width: 1080px;
+      margin: 1.8rem auto 3rem;
+      padding: 0 1.25rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 1.4rem;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.35rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+    .card h2 {
+      font-size: 1.15rem;
+      color: #093256;
+      margin-bottom: 0.7rem;
+      border-left: 4px solid #0096c7;
+      padding-left: 0.6rem;
+    }
+    .card h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+    .card p { font-size: 0.94rem; margin-bottom: 0.6rem; }
+    .badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.4rem;
+    }
+    .formula {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #093256;
+      font-family: "Courier New", monospace;
+      font-weight: 700;
+      padding: 0.6rem 0.85rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+    .sim-card {
+      background: linear-gradient(180deg, #0b4f8a 0%, #093b69 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 1.4rem;
+    }
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.25rem;
+    }
+    .sim-box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .chamber-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin: 0.7rem 0;
+    }
+    .chamber-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #bae6fd;
+      margin-bottom: 0.3rem;
+    }
+    .chamber {
+      background: #fff;
+      border-radius: 8px;
+      padding: 0.6rem;
+      min-height: 115px;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 5px;
+    }
+    .dot {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-a { background: #0ea5e9; }
+    .dot-b { background: #f97316; }
+    .legend {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.84rem;
+      margin-top: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .control { margin-bottom: 0.95rem; }
+    .control-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    input[type="range"] { width: 100%; cursor: pointer; }
+    .bounds {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      opacity: 0.85;
+    }
+    .result-box {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>화학 평형 (Chemical Equilibrium)</h1>
+    <p>가역 반응의 평형 도달 과정, 동적 평형 및 평형 상수 시뮬레이션</p>
+  </header>
+
+  <main class="container">
+    <div class="grid-2">
+      <div class="card">
+        <h2>화학 평형의 개념과 형성 과정</h2>
+        <p>
+          가역 반응에서 <strong>정반응 속도</strong>와 <strong>역반응 속도</strong>가 같아져 반응물과 생성물의 농도가 일정하게 유지되는 상태입니다.
+        </p>
+        <p>
+          초기에는 정반응이 우세하지만 생성물이 늘어나면서 역반응 속도도 빨라지고, 두 속도가 같아지는 순간 화학 평형에 도달합니다.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>동적 평형과 평형 상수</h2>
+        <p>
+          평형에서는 반응이 멈추는 것이 아니라 정반응과 역반응이 같은 속도로 계속 일어나는 <strong>동적 평형(Dynamic Equilibrium)</strong> 상태를 이룹니다.
+        </p>
+        <p>
+          반응물과 생성물의 농도는 일정하게 유지되지만 반드시 서로 같지는 않으며, 온도가 일정할 때 <strong>평형 상수(K)</strong>는 항상 같은 값을 가집니다.
+        </p>
+        <div class="formula">A ⇌ B &nbsp;|&nbsp; 평형에서 Q = [B]/[A] = K</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 1.4rem;">
+      <h2>대표 예시: 이산화질소(NO₂)와 사산화이질소(N₂O₄)</h2>
+      <div class="formula" style="margin-bottom: 0.65rem;">2NO₂(g) ⇌ N₂O₄(g)</div>
+      <p>
+        갈색 기체인 이산화질소(NO₂)가 결합하여 무색 기체인 사산화이질소(N₂O₄)를 형성하면 기체 혼합물의 색이 옅어집니다. 평형에 도달하면 두 기체가 일정한 농도를 유지하며 계속 상호 전환되므로 더 이상 색이 변하지 않습니다.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="badge">관련 화학자</span>
+        <h3>Claude Louis Berthollet</h3>
+        <p>가역 반응과 화학 평형 개념의 기초를 제시한 프랑스의 화학자입니다.</p>
+      </div>
+      <div class="card">
+        <span class="badge">관련 화학자</span>
+        <h3>Cato Maximilian Guldberg</h3>
+        <p>질량작용의 법칙과 평형 상수 식을 정립하는 데 기여한 노르웨이의 화학자입니다.</p>
+      </div>
+      <div class="card">
+        <span class="badge">관련 화학자</span>
+        <h3>Henry Louis Le Chatelier</h3>
+        <p>평형 상태의 계가 외부 조건 변화에 반응해 이동하는 원리를 정립한 화학자입니다.</p>
+      </div>
+    </div>
+
+    <div class="sim-card">
+      <div class="sim-header">
+        <div>
+          <h3>CHEMICAL EQUILIBRIUM / LIVE MODEL</h3>
+          <small>가역 반응: A ⇌ B (일정 온도 모델)</small>
+        </div>
+        <strong id="topStatus">Q = [B]/[A] = K = 2.00</strong>
+      </div>
+
+      <div class="sim-grid">
+        <div class="sim-box">
+          <div class="chamber-title">PARTICLE SIMULATION (입자 모형)</div>
+          <div class="chamber-wrap">
+            <div>
+              <div class="chamber-title">INITIAL (초기)</div>
+              <div id="initBox" class="chamber"></div>
+            </div>
+            <div>
+              <div class="chamber-title">AT EQUILIBRIUM (평형)</div>
+              <div id="eqBox" class="chamber"></div>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i class="dot dot-a"></i> A = 반응물</span>
+            <span><i class="dot dot-b"></i> B = 생성물</span>
+          </div>
+          <div class="result-box">
+            <div id="eqFormulaText" style="font-weight: 700;">Q = [B]/[A] = K = 2.00</div>
+            <div style="font-size: 0.85rem; opacity: 0.9; margin-top: 0.25rem;">Forward rate = reverse rate (정반응 속도 = 역반응 속도)</div>
+          </div>
+        </div>
+
+        <div class="sim-box">
+          <div class="chamber-title">ADJUST THE CONDITIONS (조건 조절)</div>
+
+          <div class="control">
+            <div class="control-top">
+              <span>Equilibrium constant K (평형 상수)</span>
+              <span id="kLabel">2.00</span>
+            </div>
+            <input id="kRange" type="range" min="0.2" max="5.0" step="0.05" value="2.00" />
+            <div class="bounds"><span>0.2</span><span>5.0</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-top">
+              <span>Total concentration (총 농도)</span>
+              <span id="cLabel">1.50 M</span>
+            </div>
+            <input id="cRange" type="range" min="0.2" max="2.0" step="0.05" value="1.50" />
+            <div class="bounds"><span>0.2 M</span><span>2.0 M</span></div>
+          </div>
+
+          <div class="control">
+            <div class="control-top">
+              <span>Initial B fraction (초기 B 비율)</span>
+              <span id="bLabel">20%</span>
+            </div>
+            <input id="bRange" type="range" min="0" max="100" step="5" value="20" />
+            <div class="bounds"><span>0%</span><span>100%</span></div>
+          </div>
+
+          <div class="result-box">
+            <div class="chamber-title">EQUILIBRIUM CONCENTRATIONS (평형 농도)</div>
+            <div class="result-row">
+              <strong id="concA">[A] = 0.50 M</strong>
+              <strong id="concB">[B] = 1.00 M</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const kRange = document.getElementById("kRange");
+    const cRange = document.getElementById("cRange");
+    const bRange = document.getElementById("bRange");
+
+    function drawParticles(target, countA, countB) {
+      target.innerHTML = "";
+      for (let i = 0; i < countA; i++) {
+        const s = document.createElement("span");
+        s.className = "dot dot-a";
+        target.appendChild(s);
+      }
+      for (let j = 0; j < countB; j++) {
+        const s = document.createElement("span");
+        s.className = "dot dot-b";
+        target.appendChild(s);
+      }
+    }
+
+    function updateSim() {
+      const K = parseFloat(kRange.value);
+      const C = parseFloat(cRange.value);
+      const bFrac = parseFloat(bRange.value) / 100;
+
+      const aConc = C / (1 + K);
+      const bConc = (C * K) / (1 + K);
+
+      document.getElementById("kLabel").textContent = K.toFixed(2);
+      document.getElementById("cLabel").textContent = C.toFixed(2) + " M";
+      document.getElementById("bLabel").textContent = Math.round(bFrac * 100) + "%";
+
+      document.getElementById("concA").textContent = "[A] = " + aConc.toFixed(2) + " M";
+      document.getElementById("concB").textContent = "[B] = " + bConc.toFixed(2) + " M";
+      document.getElementById("topStatus").textContent = "Q = [B]/[A] = K = " + K.toFixed(2);
+      document.getElementById("eqFormulaText").textContent = "Q = [B]/[A] = K = " + K.toFixed(2);
+
+      const total = 15;
+      const initB = Math.round(total * bFrac);
+      const initA = total - initB;
+      const eqB = Math.round(total * (K / (1 + K)));
+      const eqA = total - eqB;
+
+      drawParticles(document.getElementById("initBox"), initA, initB);
+      drawParticles(document.getElementById("eqBox"), eqA, eqB);
+    }
+
+    kRange.addEventListener("input", updateSim);
+    cRange.addEventListener("input", updateSim);
+    bRange.addEventListener("input", updateSim);
+    updateSim();
+  </script>
+</body>
+</html>
