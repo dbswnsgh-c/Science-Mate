@@ -83,3 +83,6 @@ function updateOhmsLaw() {
 currentSlider.addEventListener("input", updateOhmsLaw);
 resistanceSlider.addEventListener("input", updateOhmsLaw);
 updateOhmsLaw();
+
+document.getElementById("categoryBack").addEventListener("click",()=>navigateOnce(ecircuitTopicsScreen,categoryScreen));
+if(location.hash==="#subjects"){hasStarted=true;startScreen.classList.add("is-hidden");categoryScreen.classList.remove("is-hidden");}

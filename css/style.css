@@ -139,3 +139,5 @@ body {
 .ohms-controls input[type=range]:disabled { opacity: 1; cursor: default; }
 .ohms-controls .range-ends { display: flex; justify-content: space-between; font-size: .85em; }
 @media (max-height: 600px) { .ohms-controls { font-size: 9px; } }
+
+.subject-link{position:absolute;top:0;height:100%;width:33%;display:block}.chemistry-link{left:0}.physics-link{left:33%}.subject-link:focus-visible{outline:3px solid orange;outline-offset:-5px}
